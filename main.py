@@ -4,6 +4,13 @@ import random
 pokemon_ids = random.sample(range(1, 152), 6)
 
 with open('pokemon_encyclopedia.txt', 'w') as pokemon_file:
+    print("""-----
+Welcome to the Pokemon Encyclopedia!
+This was created as part of a CFGdegree course.
+Here are some Pokemon for your perusal.
+-----
+""", file=pokemon_file)
+
     for pokemon_id in pokemon_ids:
         response = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon_id}")
         # Converts from JavaScript Object Notation into Python lists and dictionaries
@@ -23,4 +30,10 @@ with open('pokemon_encyclopedia.txt', 'w') as pokemon_file:
             pokemon_abilities.append(ability_data['ability']['name'])
 
         print(f"Abilities: {', '.join(pokemon_abilities)}", file=pokemon_file)
-        print(file=pokemon_file)
+
+        pokemon_moves = []
+        for move_data in pokemon_data['moves'][:10]:
+            pokemon_moves.append(move_data['move']['name'])
+
+        print(f"Some moves: {', '.join(pokemon_moves)}", file=pokemon_file)
+        print(file=pokemon_file))
